@@ -1,0 +1,7 @@
+version: 2
+
+sources:
+  - name: default
+    schema: default
+    tables:
+      - name: hacker_news_queue

@@ -1,0 +1,18 @@
+{
+    "config": {
+        "connector.class": "com.clickhouse.kafka.connect.ClickHouseSinkConnector",
+        "tasks.max": 3,
+        "topics": "purchases",
+        "hostname": "clickhouse",
+        "port": 8123,
+        "username": "default",
+        "password": "",
+        "database": "default",
+        "value.converter.schemas.enable": false,
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "exactlyOnce": false,
+        "schema.enable": false
+
+    },
+    "name": "purchases-clickhouse-sink"
+}

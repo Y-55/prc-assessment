@@ -1,0 +1,11 @@
+dbt_clickhouse_malaa:
+  target: dev
+  outputs:
+    dev:
+      threads: 1
+      type: clickhouse
+      schema: default
+      host: clickhouse
+      port: 9000
+      user: default
+      password: ''

@@ -24,6 +24,18 @@ class HackerNewsQueue(Base):
         {}
     )
 
+class HackerNewsQueueTable(Base):
+    before = Column(types.Nullable(types.String), name='before', primary_key=True, nullable=True)
+    after = Column(types.Nullable(types.String), name="after", primary_key=True, nullable=True)
+    ts_ms = Column(types.Float64, name="ts_ms", primary_key=True, nullable=False)
+    
+    __tablename__ = 'hacker_news_queue_table'
+    __table_args__ = (
+        engines.MergeTree(
+            primary_key="ts_ms",
+        ),
+        {}
+    )
 # class HackerNewsLog(Base):
 #     before_id = Column(types.Nullable(types.Int64),name='before_id', primary_key=True, nullable=True)
 #     before_text = Column(types.Nullable(types.String),name='before_text', nullable=True)

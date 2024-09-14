@@ -1,16 +1,18 @@
 from prc.clickhouse.models.hackernews import (
-    HackerNewsLog,
+    # HackerNewsLog,
     HackerNewsQueue,
-    HackerNewsLogMatView,
-    HackerNews,
-    HackerNewsMatViewAdd,
-    HackerNewsMatViewDel,
+    # HackerNewsLogMatView,
+    # HackerNews,
+    # HackerNewsMatViewAdd,
+    # HackerNewsMatViewDel,
+    HackerNewsQueueTable
 )
 __all__ = [
-    "HackerNewsLog",
+    "HackerNewsQueueTable",
+    # "HackerNewsLog",
     "HackerNewsQueue",
-    "HackerNews",
-    "HackerNewsMatViewAdd",
-    "HackerNewsMatViewDel",
-    "HackerNewsLogMatView"
+    # "HackerNews",
+    # "HackerNewsMatViewAdd",
+    # "HackerNewsMatViewDel",
+    # "HackerNewsLogMatView"
 ]

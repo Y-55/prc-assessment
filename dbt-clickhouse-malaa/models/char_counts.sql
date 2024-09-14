@@ -12,7 +12,7 @@ WITH delete_ops AS (
         arrayJoin(ngrams(ifNull(before_text, ''), 1)) AS char_,
         toInt64(count(*) * -1) AS count
     FROM
-        hacker_news_log
+        {{ ref('hacker_news_log') }}
     WHERE
         op IN ('d', 'u')
     GROUP BY
@@ -24,7 +24,7 @@ add_ops AS (
         arrayJoin(ngrams(ifNull(after_text, ''), 1)) AS char_,
         toInt64(count(*)) AS count
     FROM
-        hacker_news_log
+        {{ ref('hacker_news_log') }}
     WHERE
         op IN ('c', 'u')
     GROUP BY

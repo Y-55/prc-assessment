@@ -48,7 +48,7 @@ services:
       - internal_nw
 
   connect:
-    image: debezium/connect:2.3
+    image: debezium/connect:2.7
     container_name: connect
     hostname: connect
     depends_on:

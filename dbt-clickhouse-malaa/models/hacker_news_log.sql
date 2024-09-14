@@ -24,7 +24,7 @@ WITH final AS (
         JSONExtract(after, 'created_at', 'Nullable(String)') AS after_created_at,
         JSONExtract(after, 'updated_at', 'Nullable(String)') AS after_updated_at
     FROM 
-        {{ source('default', 'hacker_news_queue') }}
+        {{ ref('hacker_news_queue_table') }} AS hacker_news_queue
 )
 
 SELECT * FROM final

@@ -47,7 +47,7 @@ final AS (
         coalesce(delete_ops.state, add_ops.state) AS state,
         coalesce(delete_ops.created_at, add_ops.created_at) AS created_at,
         coalesce(delete_ops.updated_at, add_ops.updated_at) AS updated_at,
-        coalesce(delete_ops.version, add_ops.version) AS version,
+        coalesce(nullIf(delete_ops.version, 0), add_ops.version) AS version,
         coalesce(delete_ops.deleted, add_ops.deleted) AS deleted
     FROM
         delete_ops

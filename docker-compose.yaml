@@ -169,7 +169,7 @@ services:
       - ./scripts:/app/scripts
       - ./.env:/app/.env
       - ./connect-configs:/app/connect-configs
-      - ./dbt-clickhouse-malaa:dbt-clickhouse-malaa
+      - ./dbt-clickhouse-malaa:/app/dbt-clickhouse-malaa
     restart: on-failure:3
     stdin_open: true
     tty: true

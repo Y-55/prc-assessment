@@ -10,7 +10,7 @@ In our case, the loading is managed by the ClickHouse Kafka engine, which I will
 So far, I’ve identified three limitations with dbt:
 
 - We cannot create more than one materialized view (MV) to push records into the same table.
-- dbt does not support ALTER queries, so when the schema changes, instead of altering the tables, we have to recreate them, which re-runs all transformations on the entire dataset.
+- dbt does not support ALTER queries, so when the schema changes, instead of altering the tables, we have to recreate them, which re-runs all transformations on the entire dataset which might take some time.
 - There is limited support for some ClickHouse engines, such as the Kafka engine.
 
 

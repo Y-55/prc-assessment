@@ -169,6 +169,9 @@ services:
       - ./scripts:/app/scripts
       - ./.env:/app/.env
       - ./connect-configs:/app/connect-configs
+      - ./alembic:/app/alembic
+      - ./alembic.ini:/app/alembic.ini
+      - ./clickhouse-goose-migrations:/app/clickhouse-goose-migrations
     restart: on-failure:3
     stdin_open: true
     tty: true

@@ -5,7 +5,7 @@ dbt_clickhouse_malaa:
       threads: 1
       type: clickhouse
       schema: default
-      host: clickhouse
-      port: 9000
+      host: localhost
+      port: 8123
       user: default
       password: ''

@@ -7,7 +7,7 @@
     )
 }}
 
-WITH delete_ops AS (
+--mv_del:begin
     SELECT
         arrayJoin(ngrams(ifNull(before_text, ''), 1)) AS char_,
         toInt64(count(*) * -1) AS count
@@ -17,9 +17,11 @@ WITH delete_ops AS (
         op IN ('d', 'u')
     GROUP BY
         char_
-),
+--mv_del:end
 
-add_ops AS (
+UNION ALL
+
+--mv_add:begin
     SELECT
         arrayJoin(ngrams(ifNull(after_text, ''), 1)) AS char_,
         toInt64(count(*)) AS count
@@ -29,15 +31,4 @@ add_ops AS (
         op IN ('c', 'u')
     GROUP BY
         char_
-),
-
-final AS (
-    SELECT
-        assumeNotNull(coalesce(nullIf(delete_ops.char_, ''), nullIf(add_ops.char_,''))) AS char_,
-        delete_ops.count + add_ops.count AS count
-    FROM
-        delete_ops
-        FULL OUTER JOIN add_ops ON delete_ops.char_ = add_ops.char_
-)
-
-SELECT * FROM final
+--mv_add:end

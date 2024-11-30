@@ -1,0 +1,24 @@
+sources:
+  - name: default
+    schema: default
+    tables:
+      - name: hacker_news_queue_table
+
+models:
+  - name: char_counts
+    description: Summ the nubmer of chars.
+    config:
+      tags: ['analytics', pfm]
+
+  - name: hacker_news
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+      # - name: status
+      #   tests:
+      #     - accepted_values:
+      #         values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
+      #         config:
+      #           severity: warn

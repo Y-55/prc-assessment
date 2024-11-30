@@ -1,0 +1,47 @@
+version: '3.9'
+
+
+networks:
+  internal_nw:
+    driver: bridge
+
+services:
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    hostname: postgres
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: metabase
+    volumes:
+      - ${PROJECT_PATH}/volumes/postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
+    networks:
+      - internal_nw
+  
+  metabase:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: metabase
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: metabase
+      MB_DB_PORT: 5432
+      MB_DB_USER: admin
+      MB_DB_PASS: password
+      MB_DB_HOST: postgres
+    networks:
+      - internal_nw

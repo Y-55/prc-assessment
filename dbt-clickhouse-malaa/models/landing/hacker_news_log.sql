@@ -15,16 +15,18 @@ WITH final AS (
         JSONExtract(before, 'text', 'Nullable(String)') AS before_text,
         JSONExtract(before, 'counter', 'Nullable(String)') AS before_counter,
         JSONExtract(before, 'state', 'Nullable(String)') AS before_state,
+        JSONExtract(before, 'state', 'Nullable(String)') AS before_state2,
         JSONExtract(before, 'created_at', 'Nullable(String)') AS before_created_at,
         JSONExtract(before, 'updated_at', 'Nullable(String)') AS before_updated_at,
         JSONExtract(after, 'id', 'Nullable(String)') AS after_id,
         JSONExtract(after, 'text', 'Nullable(String)') AS after_text,
         JSONExtract(after, 'counter', 'Nullable(String)') AS after_counter,
         JSONExtract(after, 'state', 'Nullable(String)') AS after_state,
+        JSONExtract(after, 'state', 'Nullable(String)') AS after_state2,
         JSONExtract(after, 'created_at', 'Nullable(String)') AS after_created_at,
         JSONExtract(after, 'updated_at', 'Nullable(String)') AS after_updated_at
     FROM 
-        {{ ref('hacker_news_queue_table') }} AS hacker_news_queue
+        {{ source('default', 'hacker_news_queue_table') }} AS hacker_news_queue
 )
 
 SELECT * FROM final

@@ -1,11 +1,11 @@
 #!/bin/bash
 
 echo "Initializing databases"
-python scripts/postgres/init.py
-python scripts/clickhouse/init.py
+python3 scripts/postgres/init.py
+python3 scripts/clickhouse/init.py
 
 echo "Initializing data sources and sink"
-python scripts/redpanda/helpers/connect_source.py
+python3 scripts/redpanda/helpers/connect_source.py
 
-cd dbt-clickhouse-malaa
-dbt run
+# cd dbt-clickhouse-malaa
+# dbt run

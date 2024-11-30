@@ -1,0 +1,65 @@
+
+data_dir: "/Users/yousef-malaa/Documents/GitHub/prc-assessment/sub_services/vector/vector-data"
+# Vector's API (disabled by default)
+# Enable and try it out with the `vector top` command
+# NOTE: this is _enabled_ for helm chart deployments, see: https://github.com/vectordotdev/helm-charts/blob/develop/charts/vector/examples/datadog-values.yaml#L78-L81
+api:
+  enabled: false
+# address = "127.0.0.1:8686"
+
+sources:
+  clickhouse_logs:
+    type: file
+    # Set this path to the ClickHouse log file
+    include:
+      - "" # log file path
+    ignore_older: 86400 # Ignores files older than 1 day
+    read_from: "beginning" # Start reading from the beginning of the file
+  
+transforms:
+  clickhouse_logs_enhanced:
+    type: remap
+    inputs: [clickhouse_logs]
+    source: |
+      .namespace = "clickhouse"
+      if is_json(string!(.message), variant: "object") {
+            res, err = parse_json(.message)
+            . |= object!(res)
+      }
+      .date_time = parse_timestamp!(.date_time, format: "%s.%f")
+      del(.thread_name)
+      del(.thread_id)
+      del(.source_file)
+      del(.source_line)
+      del(.source_type)
+      del(.file)
+
+sinks:
+  out:
+    inputs:
+      - "clickhouse_logs_enhanced"
+    type: "console"
+    encoding:
+      codec: "json"
+  # redpanda:
+  #     type: kafka
+  #     inputs: [clickhouse_logs]
+  #     bootstrap_servers: "localhost:9092"
+  #     topic: logs-stream-topic
+  #     compression: gzip
+  #     buffer:
+  #       type: disk
+  #       max_size: 1610612736
+  #     sasl:
+  #       enabled: false
+  #       mechanism: SCRAM-SHA-256
+  #       username: vector-agent
+  #     encoding:
+  #       codec: json
+  #     librdkafka_options:
+  #       ssl.endpoint.identification.algorithm: none
+  #     tls:
+  #       enabled: false
+  #       crt_file: /etc/tls/redpanda/tls.crt
+  #       ca_file: /etc/tls/redpanda/ca.crt
+  #       key_file: /etc/tls/redpanda/tls.key

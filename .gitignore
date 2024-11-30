@@ -4,3 +4,5 @@ __pycache__
 poetry.lock
 .DS_Store
 .ideas
+/volumes
+/*docker-volume
